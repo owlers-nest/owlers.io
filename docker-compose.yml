@@ -1,18 +1,54 @@
 version: '3.9'
 
 services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+    networks:
+      - web
+
+  nginx-letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: nginx-letsencrypt
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - DEFAULT_EMAIL=your@email.com
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+    networks:
+      - web
+
   owlers-service:
     build:
       context: ./owlers-service
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
     environment:
-      NODE_ENV: production
-      MONGODB_URI: mongodb://mongodb:27017/owlers-db
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/owlers-db
+      - VIRTUAL_HOST=api.owlers.io
+      - LETSENCRYPT_HOST=api.owlers.io
+      - LETSENCRYPT_EMAIL=your@email.com
+    expose:
+      - "3000"
     depends_on:
       - mongodb
     networks:
+      - web
       - app-network
     restart: always
 
@@ -20,11 +56,15 @@ services:
     build:
       context: ./owlers-client
       dockerfile: Dockerfile
-    ports:
-      - "5000:80"
     environment:
-      NODE_ENV: production
+      - NODE_ENV=production
+      - VIRTUAL_HOST=dashboard.owlers.io
+      - LETSENCRYPT_HOST=dashboard.owlers.io
+      - LETSENCRYPT_EMAIL=your@email.com
+    expose:
+      - "80"
     networks:
+      - web
       - app-network
     depends_on:
       - owlers-service
@@ -44,4 +84,5 @@ volumes:
   mongodb_data:
 
 networks:
+  web:
   app-network:
