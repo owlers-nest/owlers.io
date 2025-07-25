@@ -1,0 +1,74 @@
+# services:
+#   # Service for your Node.js application
+#   app:
+#     build:
+#       context: . # Build the image using the Dockerfile in the current directory
+#       dockerfile: Dockerfile # Specify the Dockerfile name explicitly
+#     ports:
+#       - "3000:3000" # Map host port 3000 to container port 3000
+#     environment:
+#       # Environment variable for your Node.js app to connect to MongoDB
+#       # 'mongodb' is the service name for your MongoDB container, which Docker Compose resolves to its IP
+#       MONGODB_URI: mongodb://mongodb:27017/owlers-db
+#       NODE_ENV: production # Ensure your app runs in production mode
+#     depends_on:
+#       - mongodb # Ensure the 'mongodb' service starts before 'app'
+#     volumes:
+#       # Optional: Mount your local code into the container for development
+#       # Remove or comment out in production if you want a fully self-contained image
+#       - .:/usr/src/app
+#     networks:
+#       - app-network
+
+#   # Service for MongoDB
+#   mongodb:
+#     image: mongo:latest # Use the latest official MongoDB image
+#     ports:
+#       - "27017:27017" # Map host port 27017 to container port 27017 (for external access, optional)
+#     volumes:
+#       # Persist MongoDB data to a named volume to prevent data loss on container removal
+#       - mongodb_data:/data/db
+#     networks:
+#       - app-network
+#     restart: always # Ensure MongoDB restarts if it crashes
+
+# # Define named volumes for data persistence
+# volumes:
+#   mongodb_data:
+
+# networks:
+#   app-network:
+
+
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/owlers-db
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:

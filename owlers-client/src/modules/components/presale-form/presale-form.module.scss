@@ -1,0 +1,367 @@
+.HeroSection {
+  height: fit-content;
+  text-align: center;
+  padding-top: calc(var(--header-height) + 30px);
+  @media (min-width: 415px) {
+    padding-top: calc(var(--header-height-sm) + 28px);
+  }
+  .Form {
+    margin: 0px auto;
+    width: 100%;
+    max-width: 758px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 24px;
+    box-shadow: 0px 0px 50px 0px #522c021a;
+    border: 2px dashed var(--primary-color);
+    background-color: #f2f1ee;
+    padding: 16px;
+    gap: 16px;
+
+    @media (min-width: 415px) {
+      padding: 32px;
+      gap: 32px;
+      border-radius: 40px;
+    }
+
+    @media (min-width: 834px) {
+      padding: 40px;
+      gap: 40px;
+    }
+
+    header img {
+      width: 32px;
+      height: 32px;
+
+      @media (min-width: 415px) {
+        width: 65px;
+        height: 65px;
+      }
+    }
+
+    header h2 {
+      font-weight: 700;
+      font-size: var(--font-base);
+
+      @media (min-width: 415px) {
+        font-size: var(--font-2xl);
+      }
+
+      @media (min-width: 834px) {
+        font-size: var(--font-3xl);
+      }
+    }
+
+    .Card {
+      border-radius: 12px;
+      border: 2px solid var(--primary-color);
+
+      @media (min-width: 415px) {
+        border-radius: 24px;
+        border: 3px solid var(--primary-color);
+      }
+
+      @media (min-width: 1200px) {
+        border-radius: 32px;
+      }
+    }
+
+    .TimerContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      font-size: var(--font-lg);
+      font-weight: 700;
+
+      @media (min-width: 415px) {
+        gap: 8px;
+        font-size: var(--font-3xl);
+      }
+
+      .TimerCard {
+        flex: 1 0 0%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-width: 0;
+        max-width: 70px;
+        max-height: 70px;
+        gap: 2px;
+        aspect-ratio: 1/1;
+        padding: 14px 0;
+
+        @media (min-width: 415px) {
+          max-width: 130px;
+          max-height: 130px;
+          padding: 35px 0;
+        }
+
+        @media (min-width: 834px) {
+          max-width: 150px;
+          max-height: 150px;
+        }
+
+        h3 {
+          line-height: 100%;
+          font-size: var(--font-md);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-3xl);
+          }
+
+          @media (min-width: 834px) {
+            font-size: var(--font-4xl);
+          }
+        }
+
+        h4 {
+          line-height: 100%;
+          font-size: var(--font-xs);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-lg);
+          }
+
+          @media (min-width: 834px) {
+            font-size: var(--font-xl);
+          }
+        }
+      }
+    }
+
+    .PriceContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      font-size: var(--font-3xl);
+      font-weight: 700;
+
+      @media (min-width: 415px) {
+        gap: 24px;
+      }
+
+      .PriceCard {
+        flex: 1 0 0%;
+        padding: 24px 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        /* First column takes available space, second column auto-width */
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 8px;
+        text-align: start;
+
+        @media (min-width: 415px) {
+          padding: 45px 24px;
+        }
+
+        @media (min-width: 834px) {
+          padding: 41px 24px;
+        }
+
+        h3,
+        h4 {
+          grid-column: 1;
+          line-height: 100%;
+        }
+
+        h4 {
+          font-size: var(--font-xs);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-xl);
+          }
+        }
+
+        h3 {
+          font-size: var(--font-md);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-2xl);
+          }
+
+          @media (min-width: 834px) {
+            font-size: var(--font-4xl);
+          }
+        }
+
+        .OwlIcon {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+          /* Span both rows */
+          align-self: center;
+          width: 100%;
+          min-width: 32px;
+        }
+      }
+    }
+
+    .InputsContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      font-size: var(--font-3xl);
+      font-weight: 700;
+      border: none;
+
+      @media (min-width: 415px) {
+        gap: 16px;
+      }
+
+      @media (min-width: 834px) {
+        gap: 24px;
+      }
+
+      .InputCard {
+        flex: 1 0 0%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        flex-direction: column;
+        padding: 12.4px 12px;
+        gap: 8px;
+        text-align: start;
+
+        @media (min-width: 834px) {
+          padding: 21px 24px;
+        }
+
+        label {
+          line-height: 100%;
+          font-size: var(--font-xs);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-lg);
+          }
+
+          @media (min-width: 834px) {
+            font-size: var(--font-xl);
+          }
+        }
+
+        input {
+          background-color: transparent;
+          color: var(--primary-dark-2-color);
+          padding: 0.5em;
+          width: 100%;
+          font-weight: 500;
+          transition: 180ms all;
+          border-radius: 32px;
+          border: none;
+          outline: 2px solid transparent;
+          font-size: var(--font-xs);
+
+          @media (min-width: 415px) {
+            font-size: var(--font-base);
+          }
+
+          &::placeholder {
+            color: var(--primary-dark-2-color);
+            font-size: var(--font-xs);
+
+            @media (min-width: 415px) {
+              font-size: var(--font-lg);
+            }
+          }
+
+          &:focus {
+            outline: 2px solid var(--focus-color);
+          }
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 16px 0;
+      line-height: 100%;
+      font-size: var(--font-xs);
+
+      @media (min-width: 415px) {
+        font-size: var(--font-lg);
+      }
+    }
+  }
+
+  article {
+    display: block;
+    /* margin: 0px; */
+    margin-top: 24px;
+    /* padding: 0px; */
+    width: 100%;
+
+    h2 {
+      font-weight: 500;
+      font-size: var(--font-base);
+
+      @media (min-width: 416px) {
+        font-size: var(--font-xl);
+      }
+
+      @media (min-width: 834px) {
+        font-size: var(--font-2xl);
+      }
+    }
+
+    figure {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      /* Adjust gap as needed */
+      margin: 0 auto;
+      margin-top: 24px;
+      width: 100%;
+      max-width: 642px;
+
+      img {
+        flex: 1 1 30%;
+        max-width: 30%;
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+    }
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.TWButton {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--white);
+
+  &:hover {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+}
+
+/*--------------------------------utilities-------------------------------- */
+.BgPrimary {
+  background-color: var(--primary-color);
+}
+
+.TextPrimary {
+  color: var(--primary-color);
+}
+
+.TextPrimary2 {
+  color: var(--primary-dark-2-color);
+}

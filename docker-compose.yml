@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  owlers-service:
+    build:
+      context: ./owlers-service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/owlers-db
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    restart: always
+
+  owlers-dashboard:
+    build:
+      context: ./owlers-client
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      NODE_ENV: production
+    networks:
+      - app-network
+    depends_on:
+      - owlers-service
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:

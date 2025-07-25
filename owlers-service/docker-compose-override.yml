@@ -1,0 +1,8 @@
+services:
+  app:
+    volumes:
+      - .:/usr/src/app
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://mongodb:27017/owlers-db

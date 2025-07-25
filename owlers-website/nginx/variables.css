@@ -1,0 +1,53 @@
+:root {
+  /* colors */
+  --primary-color: #1f3434;
+  --secondary-color: #d57827;
+  --tertiary-color: #6BB6A8;
+  --green-color: #60CB6B;
+  --primary-lite-color: #495a5a;
+  --primary-lite-color: #495a5a;
+  --primary-dark-2-color: #495a5a;
+  --text-color: var(--primary-color);
+  --focus-color: #495a5a54;
+  --light-bg: #f9f9f9;
+  --white: #ffffff;
+  --red: #DA6163;
+
+  --header-height:80px;
+  --header-height-sm:92px;
+  --header-height-md:96px;
+
+  --vertical-pattern: url("data:image/svg+xml,%3Csvg width='150' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='10' y1='0' x2='10' y2='100%25' stroke='%231f3434' stroke-dasharray='5,5' stroke-width='2' opacity='0.07'/%3E%3C/svg%3E");
+  --bg-repeat-pattern: repeat;
+
+  /* breakpoints */
+  --breakpoint-xs: 415px;
+  --breakpoint-sm: 834px;
+  --breakpoint-md: 1200px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
+  /* font */
+  --font-xs: 0.75rem;
+  /* 12px */
+  --font-sm: 0.875rem;
+  /* 14px */
+  --font-base: 1rem;
+  /* 16px */
+  --font-md: 1.125rem;
+  /* 18px */
+  --font-lg: 1.25rem;
+  /* 20px */
+  --font-xl: 1.5rem;
+  /* 24px */
+  --font-2xl: 1.875rem;
+  /* 30px */
+  --font-3xl: 2.25rem;
+  /* 36px */
+  --font-4xl: 3rem;
+  /* 48px */
+  --font-5xl: 3.75rem;
+  /* 60px */
+  --font-6xl: 5rem;
+  /* 80px */
+
+}

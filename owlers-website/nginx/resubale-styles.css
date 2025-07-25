@@ -1,0 +1,269 @@
+/*--------------------------------utilities-------------------------------- */
+.tw-bg-primary {
+  background-color: var(--primary-color);
+}
+
+.tw-bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.tw-bg-gradient-orange {
+  background: linear-gradient(90deg, #f5a964 0%, #d47725 100%);
+}
+
+.tw-bg-gradient-orange-reverse {
+  background: linear-gradient(90deg, #f5a964 0%, #d47725 100%);
+}
+
+.tw-bg-gradient-blue {
+  background: linear-gradient(90deg, #6477f5 0%, #b2a9fb 100%);
+}
+
+.tw-text-primary {
+  color: var(--primary-color);
+}
+
+.tw-text-primary-2 {
+  color: var(--primary-dark-2-color);
+}
+
+.tw-text-primary-lite {
+  color: var(--primary-lite-color);
+}
+
+.tw-text-secondary {
+  color: var(--secondary-color);
+}
+
+.tw-text-tertiary {
+  color: var(--tertiary-color);
+}
+
+.tw-text-green {
+  color: var(--green-color);
+}
+
+.tw-text-red {
+  color: var(--red);
+}
+
+.tw-base-font {
+  font-size: var(--font-sm);
+
+  @media (min-width: 415px) {
+    font-size: var(--font-md);
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-lg);
+  }
+}
+
+.tw-text-overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/*--------------------------------components-------------------------------- */
+.tw-logo {
+  width: 110px;
+
+  @media (min-width: 415px) {
+    width: 142px;
+  }
+
+  @media (min-width: 834px) {
+    width: 170px;
+  }
+}
+
+.tw-button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--white);
+
+  &:hover {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+}
+
+/*----------------------*/
+.tw-badge {
+  width: fit-content;
+  border-radius: 100px;
+  border: none;
+  color: var(--white);
+  font-weight: 500;
+  padding: 6px 16px;
+
+  &:hover {
+    box-shadow: 0px 0px 50px 0px #b5b4b3b5;
+    transition: box-shadow 0.5s;
+  }
+}
+
+.tw-badge-1 {
+  font-size: var(--font-sm);
+
+  @media (min-width: 415px) {
+    font-size: var(--font-lg);
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-xl);
+  }
+}
+
+.tw-badge-2 {
+  font-size: var(--font-xs);
+
+  @media (min-width: 415px) {
+    font-size: var(--font-sm);
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-md);
+  }
+}
+
+/*----------------------*/
+.tw-heading-1 {
+  font-size: var(--font-3xl);
+  font-weight: 500;
+  line-height: 40px;
+
+  @media (min-width: 415px) {
+    font-size: var(--font-5xl);
+    line-height: 68px;
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-6xl);
+    line-height: 90px;
+  }
+}
+
+.tw-heading-2 {
+  font-size: var(--font-xl);
+  font-weight: 500;
+  line-height: 31.25px;
+
+  @media (min-width: 415px) {
+    font-size: var(--font-3xl);
+    line-height: 46.87px;
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-4xl);
+    line-height: 62.5px;
+  }
+}
+
+.tw-heading-3 {
+  font-size: var(--font-lg);
+  font-weight: 700;
+
+  @media (min-width: 415px) {
+    font-size: var(--font-2xl);
+  }
+}
+
+/*----------------------*/
+.tw-paragraph-1 {
+  font-size: var(--font-sm);
+
+  @media (min-width: 415px) {
+    font-size: var(--font-md);
+  }
+
+  @media (min-width: 834px) {
+    font-size: var(--font-lg);
+  }
+}
+
+/*----------------------*/
+.tw-container {
+  /* (XS) Default mobile (0-415px) */
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 1920px;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  /* (S) Small tablet (416-833px) */
+  @media (min-width: 416px) {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* (M)Tablet landscape (834-1199px) */
+  @media (min-width: 834px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* (L) Desktop medium (1200-1439px) */
+  @media (min-width: 1200px) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  /* (XL) Desktop large (1440-1919px) */
+  @media (min-width: 1440px) {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+
+  /* // X-Large desktop (1920px+) */
+  @media (min-width: 1920px) {
+    padding-left: 360px;
+    padding-right: 360px;
+  }
+}
+/*--------------------------------animation-------------------------------- */
+.popover-animation {
+  transition: transform 200ms, opacity 200ms, display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+
+  /* at close */
+  opacity: 0;
+  transform: translateX(-100%);
+
+  /* at open */
+  &:popover-open {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@starting-style {
+  .popover-animation {
+    /* styling when transition form close style to open style */
+    &:popover-open {
+      /* close style */
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+  }
+}
+
+.details-animation {
+  &::details-content {
+    transition: block-size 1s, opacity 2s, height 1s;
+    /* transition: block-size 1s, opacity 0s, height 1s,content-visibility 1s ease-in-out ;
+    transition-behavior: allow-discrete; */
+    /* height: 0; */
+    opacity: 0;
+    block-size: 0;
+  }
+  &[open]::details-content {
+    block-size: auto;
+    /* height: auto; */
+    opacity: 1;
+  }
+}
