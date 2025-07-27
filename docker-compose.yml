@@ -42,7 +42,7 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/owlers-db
       - VIRTUAL_HOST=api.owlers.io
       - LETSENCRYPT_HOST=api.owlers.io
-      - LETSENCRYPT_EMAIL=your@email.com
+      - LETSENCRYPT_EMAIL=owlersnest@email.com
     expose:
       - "3000"
     depends_on:
@@ -52,15 +52,15 @@ services:
       - app-network
     restart: always
 
-  owlers-dashboard:
+  owlers-app:
     build:
       context: ./owlers-client
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
-      - VIRTUAL_HOST=dashboard.owlers.io
-      - LETSENCRYPT_HOST=dashboard.owlers.io
-      - LETSENCRYPT_EMAIL=your@email.com
+      - VIRTUAL_HOST=app.owlers.io
+      - LETSENCRYPT_HOST=app.owlers.io
+      - LETSENCRYPT_EMAIL=owlersnest@email.com
     expose:
       - "80"
     networks:
