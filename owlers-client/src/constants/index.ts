@@ -799,4 +799,4 @@ export const PRESALE_ABI = [
   }
 ];
 
-export const REACT_APP_BACKEND_API = process.env.REACT_APP_BACKEND_API || 'http://localhost:3000';
+export const API_URL  = process.env.REACT_APP_API_URL || 'http://localhost:3000';

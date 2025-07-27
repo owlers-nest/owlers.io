@@ -82,10 +82,11 @@ services:
   owlers-site:
     build:
       context: ./owlers-website
+      args:
+        REACT_APP_API_URL: https://api.owlers.io
     container_name: owlers-site
     environment:
       - NODE_ENV=production
-      - REACT_APP_BACKEND_API=https://api.owlers.io
       - VIRTUAL_HOST=owlers.io
       - LETSENCRYPT_HOST=owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@email.com

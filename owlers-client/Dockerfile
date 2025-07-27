@@ -3,6 +3,10 @@ FROM node:22.9.0 AS build
 
 WORKDIR /app
 
+# Pass the backend URL as build arg
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
 # Install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
