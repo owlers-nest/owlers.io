@@ -84,6 +84,8 @@ services:
       context: ./owlers-website
     container_name: owlers-site
     environment:
+      - NODE_ENV=production
+      - REACT_APP_BACKEND_API=https://api.owlers.io
       - VIRTUAL_HOST=owlers.io
       - LETSENCRYPT_HOST=owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@email.com
