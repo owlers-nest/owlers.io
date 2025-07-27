@@ -79,6 +79,19 @@ services:
     networks:
       - app-network
     restart: always
+  owlers-site:
+    build:
+      context: ./owlers-website
+    container_name: owlers-site
+    environment:
+      - VIRTUAL_HOST=owlers.io
+      - LETSENCRYPT_HOST=owlers.io
+      - LETSENCRYPT_EMAIL=owlersnest@email.com
+    expose:
+      - "80"
+    networks:
+      - web
+  restart: always
 
 volumes:
   mongodb_data:
