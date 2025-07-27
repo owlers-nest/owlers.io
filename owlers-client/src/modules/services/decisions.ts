@@ -1,11 +1,11 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { API_URL } from "../../constants";
+// import { API_URL } from "../../constants";
 
 // Define a service using a base URL and expected endpoints
 export const decisionsApi = createApi({
   reducerPath: 'decisionsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL  }), //API_URL
   endpoints: (builder) => ({
     getDecisions: builder.query<any, string>({
       query: (walletAddress: string) => walletAddress ? `api/decisions?walletAddress=${walletAddress}` : `api/decisions`,

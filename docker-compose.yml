@@ -83,7 +83,7 @@ services:
     build:
       context: ./owlers-website
       args:
-        REACT_APP_API_URL: https://api.owlers.io
+        VITE_API_URL: https://api.owlers.io
     container_name: owlers-site
     environment:
       - NODE_ENV=production

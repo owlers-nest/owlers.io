@@ -1,12 +1,12 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Project } from "../types";
-import { API_URL } from "../../constants";
+// import { API_URL } from "../../constants";
 
 // Define a service using a base URL and expected endpoints
 export const projectsApi = createApi({
   reducerPath: "projectsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL  }), //API_URL
   endpoints: (builder) => ({
     getProjects: builder.query<any, number>({
       query: (page: number) => `api/projects?page=${page}`,
