@@ -91,7 +91,7 @@ services:
       - "80"
     networks:
       - web
-  restart: always
+    restart: always
 
 volumes:
   mongodb_data:
