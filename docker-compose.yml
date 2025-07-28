@@ -50,6 +50,9 @@ services:
       - VIRTUAL_HOST=web.owlers.io
       - LETSENCRYPT_HOST=web.owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@gmail.com
+    networks:
+      - nginx_proxy
+      - app-network
 
   mongodb:
     image: mongo:latest
