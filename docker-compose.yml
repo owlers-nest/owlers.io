@@ -37,6 +37,7 @@ services:
     build:
       context: ./owlers-service
       dockerfile: Dockerfile
+    container_name: owlers-service
     environment:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://mongodb:27017/owlers-db
@@ -56,6 +57,7 @@ services:
     build:
       context: ./owlers-client
       dockerfile: Dockerfile
+    container_name: owlers-app
     environment:
       - NODE_ENV=production
       - VIRTUAL_HOST=app.owlers.io
@@ -72,6 +74,7 @@ services:
 
   mongodb:
     image: mongo:latest
+    container_name: mongodb
     ports:
       - "27017:27017"
     volumes:
@@ -79,6 +82,7 @@ services:
     networks:
       - app-network
     restart: always
+    
   owlers-site:
     build:
       context: ./owlers-website
