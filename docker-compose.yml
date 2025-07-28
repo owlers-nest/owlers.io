@@ -1,108 +1,71 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy
-    container_name: nginx-proxy
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs
-      - ./vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-    networks:
-      - web
-
-  nginx-letsencrypt:
-    image: nginxproxy/acme-companion
-    container_name: nginx-letsencrypt
-    restart: always
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-      - DEFAULT_EMAIL=your@email.com
-    depends_on:
-      - nginx-proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./certs:/etc/nginx/certs
-      - ./vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-    networks:
-      - web
-
   owlers-service:
     build:
       context: ./owlers-service
-      dockerfile: Dockerfile
     container_name: owlers-service
     environment:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://mongodb:27017/owlers-db
       - VIRTUAL_HOST=api.owlers.io
       - LETSENCRYPT_HOST=api.owlers.io
-      - LETSENCRYPT_EMAIL=owlersnest@email.com
+      - LETSENCRYPT_EMAIL=owlersnest@gmail.com
     expose:
       - "3000"
+    networks:
+      - nginx_proxy
+      - app-network
     depends_on:
       - mongodb
-    networks:
-      - web
-      - app-network
-    restart: always
+    restart: unless-stopped
 
   owlers-app:
     build:
       context: ./owlers-client
-      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: https://api.owlers.io
     container_name: owlers-app
     environment:
       - NODE_ENV=production
+      - VITE_API_BASE_URL=https://api.owlers.io
       - VIRTUAL_HOST=app.owlers.io
       - LETSENCRYPT_HOST=app.owlers.io
-      - LETSENCRYPT_EMAIL=owlersnest@email.com
+      - LETSENCRYPT_EMAIL=owlersnest@gmail.com
     expose:
       - "80"
-    networks:
-      - web
-      - app-network
     depends_on:
       - owlers-service
-    restart: always
+    networks:
+      - nginx_proxy
+      - app-network
+    restart: unless-stopped
+
+  owlers-site:
+    build:
+      context: ./owlers-website
+    container_name: owlers-site
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=owlers.io
+      - LETSENCRYPT_HOST=owlers.io
+      - LETSENCRYPT_EMAIL=owlersnest@gmail.com
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: owlers-db
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     networks:
       - app-network
-    restart: always
-    
-  owlers-site:
-    build:
-      context: ./owlers-website
-      args:
-        VITE_API_URL: https://api.owlers.io
-    container_name: owlers-site
-    environment:
-      - NODE_ENV=production
-      - VIRTUAL_HOST=owlers.io
-      - LETSENCRYPT_HOST=owlers.io
-      - LETSENCRYPT_EMAIL=owlersnest@email.com
-    expose:
-      - "80"
-    networks:
-      - web
-    restart: always
+    restart: unless-stopped
 
 volumes:
   mongodb_data:
 
 networks:
-  web:
+  nginx_proxy:
+    external: true
   app-network:
