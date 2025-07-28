@@ -24,6 +24,8 @@ services:
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
       - DEFAULT_EMAIL=owlersnest@gmail.com
+      ## remove this in case of production (we are using the staging acme to create un-limited certs)
+      - ACME_CA_URI=https://acme-staging-v02.api.letsencrypt.org/directory
     depends_on:
       - nginx-proxy
     volumes:
