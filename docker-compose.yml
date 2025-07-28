@@ -47,8 +47,8 @@ services:
     container_name: owlers-site
     environment:
       - NODE_ENV=production
-      - VIRTUAL_HOST=owlers.io
-      - LETSENCRYPT_HOST=owlers.io
+      - VIRTUAL_HOST=web.owlers.io
+      - LETSENCRYPT_HOST=web.owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@gmail.com
 
   mongodb:
