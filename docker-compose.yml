@@ -8,8 +8,8 @@ services:
     environment:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://mongodb:27017/owlers-db
-      - VIRTUAL_HOST=api.owlers.io
-      - LETSENCRYPT_HOST=api.owlers.io
+      - VIRTUAL_HOST=rest.owlers.io
+      - LETSENCRYPT_HOST=rest.owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@gmail.com
     expose:
       - "3000"
@@ -24,13 +24,13 @@ services:
     build:
       context: ./owlers-client
       args:
-        VITE_API_URL: https://api.owlers.io
+        VITE_API_URL: https://rest.owlers.io
     container_name: owlers-app
     environment:
       - NODE_ENV=production
-      - VITE_API_BASE_URL=https://api.owlers.io
-      - VIRTUAL_HOST=app.owlers.io
-      - LETSENCRYPT_HOST=app.owlers.io
+      - VITE_API_BASE_URL=https://rest.owlers.io
+      - VIRTUAL_HOST=dashboard.owlers.io
+      - LETSENCRYPT_HOST=dashboard.owlers.io
       - LETSENCRYPT_EMAIL=owlersnest@gmail.com
     expose:
       - "80"
