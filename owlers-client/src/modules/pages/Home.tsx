@@ -15,10 +15,10 @@ const Home = () => {
     const recentProjects = useSelector(getRecentProjects);
     const dispatch = useDispatch();
 
-    const { data: response } = useGetProjectsQuery(1);
+    const { data: response, isLoading } = useGetProjectsQuery(1);
 
     useEffect(() => {
-        if (response) {
+        if (response && !isLoading) {
             dispatch(insertProjects(response.data))
         }
     }, [response]);
@@ -26,8 +26,8 @@ const Home = () => {
     return (
         <div>
             <ProjectsFilter onStatusChange={(status: any) => dispatch(updateProjectsStatus(status))}/>
-            <RecentProjects projects={recentProjects || []} />
-            <Projects projects={projects || []} />
+            <RecentProjects projects={recentProjects || []} isLoading={isLoading} />
+            <Projects projects={projects || []} isLoading={isLoading} />
         </div>
     )
 }

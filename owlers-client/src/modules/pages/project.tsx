@@ -6,6 +6,8 @@ import {
   Text,
   Grid,
   GridItem,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useOwlMutation, useLazyGetProjectQuery } from "../services/projects";
@@ -30,8 +32,6 @@ import { selectProject } from "../store/slices/projects";
 import { Project } from "../types";
 import SwitchNetworkDialog from "../components/switch-network-dialog";
 import Empty from "../components/empty/empty";
-// Remove this line:
-// import { useNavigate } from "react-router-dom";
 import GoToLink from "../components/go-to-link/go-to-link";
 
 const ProjectPage = () => {
@@ -60,7 +60,6 @@ const ProjectPage = () => {
   useEffect(() => {
     const triggerGetProject = async () => {
       const data = await trigger(projectId as unknown as string);
-      console.log(data);
       dispatch(selectProject(data.data?.data as unknown as Project));
     };
     if (!project) {
@@ -151,30 +150,55 @@ const ProjectPage = () => {
             <GridItem>
               <Flex alignItems={"start"}>
                 <Box style={{ textDecoration: "none", marginRight: "8px" }}>
-                  <Avatar
-                    src={project?.logoUrl}
-                    name={project?.name}
-                    size="lg"
-                    shape="full"
-                    background={"transparent"}
-                  />
+                  {isLoadingProject ? (
+                    <SkeletonCircle size={12} />
+                  ) : (
+                    <Avatar
+                      src={project?.logoUrl}
+                      name={project?.name}
+                      size="lg"
+                      shape="full"
+                      background={"transparent"}
+                    />
+                  )}
                 </Box>
                 <Flex flexDirection={"column"}>
                   <div>
-                    <h2>{project?.name}</h2>
+                    {isLoadingProject ? (
+                      <SkeletonText
+                        width={"65px"}
+                        noOfLines={1}
+                        marginBottom={"5px"}
+                      />
+                    ) : (
+                      <h2>{project?.name}</h2>
+                    )}
                   </div>
-                  <OwlBadge owl={'NotSpecified'} />
+                  <OwlBadge
+                    owl={isLoadingProject ? "Skeleton" : "NotSpecified"}
+                  />
                 </Flex>
               </Flex>
             </GridItem>
             <GridItem colSpan={2} textAlign={"center"}>
-              <Text>{project?.description}</Text>
+              {isLoadingProject ? (
+                <SkeletonText noOfLines={3} />
+              ) : (
+                <Text>{project?.description}</Text>
+              )}
             </GridItem>
             <GridItem>
               <Flex justifyContent={"flex-end"}>
-                {project?.links.map((link) => (
-                  <SocialMediaIcon link={link.link} type={link.type as any} />
-                ))}
+                {isLoadingProject
+                  ? Array.from({ length: 3 }).map(() => (
+                      <SkeletonCircle size={6} marginRight={"3px"} />
+                    ))
+                  : project?.links.map((link) => (
+                      <SocialMediaIcon
+                        link={link.link}
+                        type={link.type as any}
+                      />
+                    ))}
               </Flex>
             </GridItem>
           </Grid>
@@ -187,6 +211,7 @@ const ProjectPage = () => {
               <OwlStats
                 legits={project?.decisionsStats.legit || 0}
                 scams={project?.decisionsStats.scam || 0}
+                isLoading={isLoadingProject}
               />
             </GridItem>
             <GridItem>
@@ -196,6 +221,7 @@ const ProjectPage = () => {
                     return (
                       <OwlVote
                         handleOwlClicked={(owl) => handleOwlClicked(owl, show)}
+                        isLoading={isLoadingProject}
                       />
                     );
                   }}
@@ -220,6 +246,7 @@ const ProjectPage = () => {
                 Project tokenomics
               </Card.Title>
               <GoToLink
+                isDisabled={isLoadingProject}
                 title="View tokenomics"
                 onClick={() =>
                   window.open((project as any).tokenDistributionLink)
@@ -230,12 +257,22 @@ const ProjectPage = () => {
         </Card.Header>
         <Card.Body gap="2">
           <Flex flexWrap={"wrap"}>
-            {project && project.tokenDistribution
+            {isLoadingProject
+              ? Array.from({ length: 5 }).map(() => (
+                  <ProjectTokenDistribution
+                    distribution={"loading"}
+                    value={""}
+                    isPercentage={false}
+                    isLoading={isLoadingProject}
+                  />
+                ))
+              : project && project.tokenDistribution
               ? project?.tokenDistribution?.map((d) => (
                   <ProjectTokenDistribution
                     distribution={d.title}
                     value={d.percentage}
                     isPercentage={d.isPercentage}
+                    isLoading={false}
                   />
                 ))
               : ""}
@@ -258,8 +295,8 @@ const ProjectPage = () => {
         <Card.Body gap="2">
           <Flex>
             {project && project.contracts
-              ? project.contracts.map((network: any) => (
-                  <ProjectContract network={network.name} />
+              ? project.contracts.map((contract: any) => (
+                  <ProjectContract network={contract.name} link={contract.link} isLoading={isLoadingProject} />
                 ))
               : ""}
           </Flex>
@@ -280,7 +317,7 @@ const ProjectPage = () => {
         </Card.Header>
         <Card.Body gap="2">
           {project?.roadMap && project?.roadMap.length > 0 ? (
-            <ProjectRoadmap roadMap={project.roadMap} />
+            <ProjectRoadmap roadMap={project.roadMap} isLoading={isLoadingProject} />
           ) : (
             <Empty message="No project roadMap!" />
           )}

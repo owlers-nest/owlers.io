@@ -105,7 +105,7 @@ const ProjectSearchListItem: FC<ProjectSearchListItem> = ({
         textAlign={"right"}
         borderBottom={isLastItem ? "none" : "1px solid grey.light"}
       >
-        <GoToLink title="Open" onClick={() => navigate(`/projects/${item.id}`)} />
+        <GoToLink title="Open" onClick={() => navigate(`/projects/${item.id}`)} isDisabled={false} />
       </Table.Cell>
     </Table.Row>
   );

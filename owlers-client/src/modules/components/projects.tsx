@@ -1,7 +1,7 @@
 import { Flex, Stack, HStack } from "@chakra-ui/react";
 import { AccordionRoot, AccordionItem, AccordionItemTrigger, AccordionItemContent } from "../../components/ui/accordion";
 import { ProjectItemContent, ProjectItemHeader } from "../components/project";
-import ProjectCard from "../components/project-card";
+import ProjectCard from "./project-card/project-card";
 import { Project } from "../types";
 import {Button} from "../../components/ui/button"
 import { useNavigate } from "react-router-dom";

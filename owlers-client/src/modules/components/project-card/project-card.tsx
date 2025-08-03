@@ -1,8 +1,8 @@
 import { Card, Flex, Heading } from "@chakra-ui/react";
-import { Button } from "../../components/ui/button";
-import { Avatar } from "../../components/ui/avatar";
+import { Button } from "../../../components/ui/button";
+import { Avatar } from "../../../components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import OwlBadge from "./owl-badge";
+import OwlBadge from "../owl-badge";
 
 interface Props {
     name: string;
@@ -42,7 +42,10 @@ const ProjectCard = ({ name, description, image, id, legitStats }: Props) => {
                             shape="full"
                             bg={'transparent'}
                         />
-                        <Heading marginLeft={'5px'}  color="primary1" as={"h2"} fontWeight={"normal"}>{name}</Heading>
+                        <Heading marginLeft={'5px'}  color="primary1" as={"h2"} fontWeight={"normal"}>
+                            {name}
+                        </Heading>
+                         
                     </Flex>
                     {renderOwlBadge()}
                 </Flex>
@@ -51,7 +54,7 @@ const ProjectCard = ({ name, description, image, id, legitStats }: Props) => {
                 </Card.Description>
             </Card.Body>
             <Card.Footer justifyContent="center">
-                <Button w={"full"} size={"lg"} variant="outline" onClick={() => navigate(`/projects/${id}`)} borderRadius={"8px"} color="primary1" borderColor={"primary1"}>View Project</Button>
+      <Button w={"full"} size={"lg"} variant="outline" onClick={() => navigate(`/projects/${id}`)} borderRadius={"8px"} color="primary1" borderColor={"primary1"}>View Project</Button>
             </Card.Footer>
         </Card.Root>
     );

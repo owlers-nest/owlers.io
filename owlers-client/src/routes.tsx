@@ -5,6 +5,7 @@ import Projects from './modules/pages/projects.tsx';
 import ProjectPage from './modules/pages/project.tsx';
 import SettingsPage from './modules/settings/pages/settings.tsx';
 // import PreSalePage from './modules/pages/Presale.tsx';
+import NotFound from './modules/pages/not-found.tsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: "*",
+    element: <NotFound />
+  }
   // {
   //   path: '/pre-sale',
   //   element: <PreSalePage />

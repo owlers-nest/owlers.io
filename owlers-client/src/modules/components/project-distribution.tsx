@@ -1,16 +1,44 @@
+import { FC } from "react";
 import { StatLabel, StatRoot, StatValueText } from "../../components/ui/stat";
+import { SkeletonText } from "@chakra-ui/react";
 
 interface Props {
-    distribution: string;
-    value: string;
-    isPercentage: boolean;
+  distribution: string;
+  value: string;
+  isPercentage: boolean;
+  isLoading: boolean;
 }
 
-const ProjectTokenDistribution = ({distribution, value, isPercentage}: Props) => {
-    return (<StatRoot mr={2} borderWidth="1px" p="4" rounded="md" minW={"220px"} maxW={"220px"} marginY={"8px"}>
-      <StatLabel justifyContent={'space-between'} info={distribution}>{distribution} </StatLabel>
-      <StatValueText>{value}{isPercentage ? '%' : ''}</StatValueText>
-    </StatRoot>);
+const ProjectTokenDistribution: FC<Props> = ({
+  distribution,
+  value,
+  isPercentage,
+  isLoading,
+}) => {
+  return (
+    <StatRoot
+      mr={2}
+      borderWidth="1px"
+      p="4"
+      rounded="md"
+      minW={"220px"}
+      maxW={"220px"}
+      marginY={"8px"}
+      minH={"80px"}
+    >
+      <StatLabel justifyContent={"space-between"} info={distribution} alignItems={"center"}>
+        {isLoading ? (
+          <SkeletonText noOfLines={1} width={"100px"} />
+        ) : (
+          distribution
+        )}
+      </StatLabel>
+      <StatValueText>
+        {isLoading ? <SkeletonText noOfLines={1} width={"25px"} /> : value}
+        {isPercentage ? "%" : ""}
+      </StatValueText>
+    </StatRoot>
+  );
 };
 
 export default ProjectTokenDistribution;

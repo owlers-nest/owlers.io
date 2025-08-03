@@ -43,19 +43,17 @@ const MySettings = () => {
     //     token: OWL_TOKEN_ADDRESS
     // });
 
-    const [trigger] = useLazyGetDecisionsQuery();
+    const [trigger, { isLoading }] = useLazyGetDecisionsQuery();
 
     const [scams, setScams] = useState<number>(0);
     const [legits, setLegits] = useState<number>(0);
     const [myProjects, setMyProjects] = useState<any>([]);
 
     const loadMyAllocations = async () => {
-        console.log("====address", address)
         const myAllocations = await getMyAllocations(address as string);
         if (myAllocations) {
             setUserTokenAllocation(myAllocations);
         }
-            console.log("====myAllocations", myAllocations)
     }
 
     useEffect(() => {
@@ -184,10 +182,10 @@ const MySettings = () => {
                 <Card.Body>
 
                     <Flex flexDir={"column"} width={"100%"} margin={"10px"}>
-                        <OwlStats legits={legits} scams={scams} />
+                        <OwlStats legits={legits} scams={scams} isLoading={isLoading} />
                     </Flex>
 
-                    {myProjects && myProjects.length ? <ProjectList projects={myProjects} /> : ""}
+                    {myProjects && myProjects.length ? <ProjectList projects={myProjects} isLoading={isLoading} /> : ""}
                 </Card.Body>
             </Card.Root >
         </>

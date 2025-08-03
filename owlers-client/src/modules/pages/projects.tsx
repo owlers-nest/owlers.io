@@ -1,70 +1,30 @@
 import { Card, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-// import Pagination from "../components/pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProjectsQuery } from "../services/projects";
-// import { useAccount } from "wagmi";
 import { Button } from "../../components/ui/button";
-
 import ProjectCards from "../components/project-cards";
 import ProjectList from "../components/project-list";
-
 import { getProjects } from "../store/selectors/projects";
 import { insertProjects, updateProjectsStatus } from "../store/slices/projects";
-
 import ViewList from "../../assets/view-list.svg";
 import ViewCard from "../../assets/view-card.svg";
-
 import ProjectsFilter from "../components/projects-filter/projects-filter";
 import Empty from "../components/empty/empty";
-
-import { Pagination, ButtonGroup, Stack, For, IconButton } from "@chakra-ui/react"
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-
-const PaginationComponents = () => {
-  return (
-    <Stack gap="8">
-      <For each={["sm"]}>
-        {(size) => (
-          <Pagination.Root count={20} pageSize={2} defaultPage={1} key={size}>
-            <ButtonGroup variant="ghost" size={size}>
-              <Pagination.PrevTrigger asChild>
-                <IconButton>
-                  <LuChevronLeft />
-                </IconButton>
-              </Pagination.PrevTrigger>
-
-              <Pagination.Items
-                render={(page) => (
-                  <IconButton variant={{ base: "ghost", _selected: "outline" }}>
-                    {page.value}
-                  </IconButton>
-                )}
-              />
-
-              <Pagination.NextTrigger asChild>
-                <IconButton>
-                  <LuChevronRight />
-                </IconButton>
-              </Pagination.NextTrigger>
-            </ButtonGroup>
-          </Pagination.Root>
-        )}
-      </For>
-    </Stack>
-  );
-}
+import PaginationComponent from "../components/pagination/pagination";
 
 const ProjectsPage = () => {
   const projects = useSelector(getProjects);
   const dispatch = useDispatch();
 
-  const [page, _] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [paginationMetaData, setPaginationMetaData] = useState<{ total: number; }>({ total: 0 });
 
-  const { data: response } = useGetProjectsQuery(page);
+  const { data: response, isLoading } = useGetProjectsQuery(page);
 
   useEffect(() => {
-    if (response) {
+    if (response && !isLoading) {
+      setPaginationMetaData({ total: response.total })
       dispatch(insertProjects(response.data));
     }
   }, [response]);
@@ -74,6 +34,8 @@ const ProjectsPage = () => {
   const handleDisplayChange = (display: "list" | "card") => {
     setDisplay(display);
   };
+
+  const handlePageChange = (page: number) => setPage(page);
 
   return (
     <>
@@ -96,7 +58,7 @@ const ProjectsPage = () => {
                 onClick={() => handleDisplayChange("card")}
                 marginRight={"8px"}
                 padding={"5px"}
-                variant={{ base: "outline", _selected: "solid" }}
+                variant={display === "card" ? "surface" : "outline"}
                 disabled={projects.length === 0}
               >
                 <img width="20" height="16" src={ViewList} alt="" />
@@ -104,9 +66,9 @@ const ProjectsPage = () => {
 
               <Button
                 onClick={() => handleDisplayChange("list")}
-                variant={"outline"}
                 padding={"5px"}
                 disabled={projects.length === 0}
+                variant={display === "list" ? "surface" : "outline"}
               >
                 <img width="24" height="24" src={ViewCard} alt="" />
               </Button>
@@ -115,16 +77,16 @@ const ProjectsPage = () => {
         </Card.Header>
         <Card.Body gap="2">
           {display === "list" ? (
-            <ProjectList projects={projects} />
+            <ProjectList projects={projects} isLoading={isLoading} />
           ) : (
-            <ProjectCards projects={projects} />
+            <ProjectCards projects={projects} isLoading={isLoading} />
           )}
 
-          {projects.length === 0 ? <Empty /> : null}
+          {projects.length === 0 && !isLoading ? <Empty /> : null}
         </Card.Body>
 
-          <Flex justifyContent={'center'} marginY={5}>
-        <PaginationComponents />
+        <Flex justifyContent={"center"} marginY={5}>
+          <PaginationComponent total={paginationMetaData.total} onPageChange={handlePageChange} />
         </Flex>
       </Card.Root>
     </>

@@ -14,9 +14,10 @@ import Empty from "../empty/empty";
 
 export interface Props {
     projects: Project[];
+    isLoading: boolean;
 }
 
-const Projects = ({ projects }: Props) => {
+const Projects = ({ projects, isLoading }: Props) => {
     const [display, setDisplay] = useState<"list" | "card">("list");
     const navigate = useNavigate();
 
@@ -49,9 +50,9 @@ const Projects = ({ projects }: Props) => {
             </Card.Header>
             <Card.Body gap="2">
                 {
-                    display === "list" ? <ProjectList projects={projects}/> : <ProjectCards projects={projects} />
+                    display === "list" ? <ProjectList projects={projects} isLoading={isLoading} /> : <ProjectCards projects={projects} isLoading={isLoading} />
                 }
-                {projects.length === 0 ?  <Empty />  : null}
+                {projects.length === 0 && !isLoading ?  <Empty />  : null}
             </Card.Body>
         </Card.Root>
     );

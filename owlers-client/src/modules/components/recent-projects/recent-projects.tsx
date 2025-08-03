@@ -1,15 +1,17 @@
 import { Card, Heading } from "@chakra-ui/react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ProjectCard from "../../components/project-card";
+import ProjectCard from "../project-card/project-card";
 import { Project } from "../../types";
 import Slider from "../slider/slider";
+import ProjectCardSkeleton from "../project-card/project-card-skeleton";
 
 interface Props {
     projects: Project[];
+    isLoading: boolean;
 }
 
-const RecentProjects = ({ projects }: Props) => {
+const RecentProjects = ({ projects, isLoading }: Props) => {
     return (
         <Card.Root width="full" borderRadius={24} borderColor={"transparent"} marginBottom={5}>
             <Card.Header>
@@ -18,7 +20,7 @@ const RecentProjects = ({ projects }: Props) => {
             <Card.Body position={"relative"}>
                 <div className="slider-container">
                     <Slider>
-                        {
+                        { isLoading ? Array.from({ length: 4 }).map(() => <ProjectCardSkeleton />) :
                             projects.map(project =>
                                 <ProjectCard legitStats={project.decisionsStats} name={project.name} image={project.logoUrl} id={project.id} description={project.description} />
                             )

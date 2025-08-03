@@ -7,7 +7,7 @@ import { connectToDB } from "./utils";
 import cors from "cors";
 import { run as initProjects } from "./scripts/projects";
 
-dotenv.config();
+dotenv.config({ path: '/Users/amenaem/projects/owlers.io/owlers-service/.env' });
 
 const app: Express = express();
 

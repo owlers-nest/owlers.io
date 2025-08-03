@@ -1,7 +1,7 @@
-import { Table, Flex, Box, Heading} from "@chakra-ui/react";
-import { Avatar } from "../../components/ui/avatar";
-import { Button } from "../../components/ui/button";
-import OwlBadge from "./owl-badge";
+import { Table, Flex, Box, Heading } from "@chakra-ui/react";
+import { Avatar } from "../../../components/ui/avatar";
+import { Button } from "../../../components/ui/button";
+import OwlBadge from "../owl-badge";
 import { useNavigate } from "react-router-dom";
 
 
@@ -48,14 +48,17 @@ const ProjectListItem = ({ id, name, description, image, legitStats, isLastEleme
                             />
                         </Box>
                         <Flex flexDirection={"column"}>
-                            {/* <h2>{name}</h2> */}
-                            <Heading color="primary1" as={"h2"} fontWeight={"normal"}>{name}</Heading>
+                            <Heading color="primary1" as={"h2"} fontWeight={"normal"}>
+                                {name}
+                            </Heading>
                             {renderOwlBadge()}
                         </Flex>
                     </Flex>
                 </Flex>
             </Table.Cell>
-            <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} maxW="350px" color="primary2">{description}</Table.Cell>
+            <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} maxW="350px" color="primary2">
+                {description}
+            </Table.Cell>
             <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} textAlign="end">
                 <Button size={"lg"} variant="outline" onClick={() => navigate(`/projects/${id}`)} borderRadius={"8px"} color="primary1" borderColor={"primary1"}>View Project</Button>
             </Table.Cell>
