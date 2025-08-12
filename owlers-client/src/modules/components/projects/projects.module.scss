@@ -1,0 +1,16 @@
+.projectsTitle {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.viewAllButton {
+    font-size: 10px;
+    margin: 0;
+}
+
+/* large laptops and bigger screens **/
+@media screen and (min-width: 1024px) {
+    .projectsTitle {
+        font-size: 32px;
+    }
+}

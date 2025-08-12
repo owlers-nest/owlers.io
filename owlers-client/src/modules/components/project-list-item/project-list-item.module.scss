@@ -1,0 +1,41 @@
+.description {
+  display: none;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+}
+
+.projectName {
+    font-size: 15px;
+}
+
+.viewProjectButton {
+  // font-size: 10px;
+  font-size: var(--chakra-font-sizes-xs)
+}
+
+@media screen and (min-width: 1024px) {
+  .description {
+    display: table-cell;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } 
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .projectName {
+    font-size: 20px;
+}
+
+.viewProjectButton {
+  // font-size: 10px;
+  font-size: var(--chakra-font-sizes-md)
+}
+
+}

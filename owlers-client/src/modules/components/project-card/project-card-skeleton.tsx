@@ -1,5 +1,5 @@
 import { Card, Flex, Skeleton, SkeletonText, SkeletonCircle } from "@chakra-ui/react";
-import OwlBadge from "../owl-badge";
+import OwlBadge from "../owl-badge/owl-badge";
 
 const ProjectCardSkeleton = () => {
 

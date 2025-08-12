@@ -8,19 +8,20 @@ import {
   GridItem,
   SkeletonCircle,
   SkeletonText,
+  IconButton,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useOwlMutation, useLazyGetProjectQuery } from "../services/projects";
 import { useParams } from "react-router-dom";
 import { toaster, Toaster } from "../../components/ui/toaster";
 import { useAccount, useBalance, useSwitchChain } from "wagmi";
 import { ConnectKitButton } from "connectkit";
 
-import OwlBadge from "../components/owl-badge";
+import OwlBadge from "../components/owl-badge/owl-badge";
 import { Avatar } from "../../components/ui/avatar";
 import OwlStats from "../components/owl-stats";
-import OwlVote from "../components/owl-vote";
-import ProjectTokenDistribution from "../components/project-distribution";
+import OwlVote from "../components/owl-vote/owl-vote";
+import ProjectTokenDistribution from "../components/project-distribution/project-distribution";
 import ProjectContract from "../components/project-contract";
 import ProjectRoadmap from "../components/project-roadmap";
 import OwlVoteConfirmationDialog from "../components/owl-vote-confrimation-dialog";
@@ -33,6 +34,19 @@ import { Project } from "../types";
 import SwitchNetworkDialog from "../components/switch-network-dialog";
 import Empty from "../components/empty/empty";
 import GoToLink from "../components/go-to-link/go-to-link";
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
+import styles from "./Project.module.scss";
+import { getIsSmallMobile, getIsTabletAndLargeMobile } from "../store/selectors/ui";
+
+type Props = {
+  isOpen: boolean;
+  onClick: () => void;
+};
+const CollapseButton: FC<Props> = ({ onClick, isOpen }) => (
+  <IconButton onClick={onClick} variant={"plain"}>
+    {isOpen ? <BsArrowUpShort /> : <BsArrowDownShort />}
+  </IconButton>
+);
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
@@ -45,6 +59,8 @@ const ProjectPage = () => {
 
   const { projectId } = useParams<{ projectId: string }>();
   const project = useSelector(getProject(projectId as unknown as string));
+  const isSmallMobile = useSelector(getIsSmallMobile);
+  const isTabletAndLargeMobile = useSelector(getIsTabletAndLargeMobile);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [owlDecision, setOwlDecision] = useState("Legit");
 
@@ -55,6 +71,15 @@ const ProjectPage = () => {
   const { switchChain } = useSwitchChain();
 
   const [isSwitchNetworkDialogOpen, setSwitchNetworkDialogOpen] =
+    useState<boolean>(false);
+
+  const [isTokenomicsAccordionOpen, setIsTokenomicsAccordionOpen] =
+    useState<boolean>(false);
+
+  const [isContractsAccordionOpen, setIsContractsAccordionOpen] =
+    useState<boolean>(false);
+
+  const [isRoadmapAccordionOpen, setIsRoadmapAccordionOpen] =
     useState<boolean>(false);
 
   useEffect(() => {
@@ -130,13 +155,15 @@ const ProjectPage = () => {
     }
   };
 
+  const isSmallDevice = (): boolean =>  isSmallMobile || isTabletAndLargeMobile;
+
   const handleSwitchChain = () => {
     switchChain({ chainId: OWL_CHAIN_ID });
     setSwitchNetworkDialogOpen(false);
     setIsOpen(true);
   };
 
-  return !isLoadingProject ? (
+  return (
     <>
       {/* Base Info */}
       <Card.Root
@@ -146,7 +173,7 @@ const ProjectPage = () => {
         borderColor={"transparent"}
       >
         <Card.Body gap="2">
-          <Grid marginBottom={6} templateColumns="repeat(4, 1fr)" gap="6">
+          <Grid marginBottom={6} className={styles.mainContent}>
             <GridItem>
               <Flex alignItems={"start"}>
                 <Box style={{ textDecoration: "none", marginRight: "8px" }}>
@@ -180,20 +207,20 @@ const ProjectPage = () => {
                 </Flex>
               </Flex>
             </GridItem>
-            <GridItem colSpan={2} textAlign={"center"}>
+            { isSmallDevice() ? null : <GridItem colSpan={2} textAlign={"center"}>
               {isLoadingProject ? (
                 <SkeletonText noOfLines={3} />
               ) : (
                 <Text>{project?.description}</Text>
               )}
-            </GridItem>
+            </GridItem>}
             <GridItem>
               <Flex justifyContent={"flex-end"}>
                 {isLoadingProject
                   ? Array.from({ length: 3 }).map(() => (
                       <SkeletonCircle size={6} marginRight={"3px"} />
                     ))
-                  : project?.links.map((link) => (
+                  : project?.links.map((link: any) => (
                       <SocialMediaIcon
                         link={link.link}
                         type={link.type as any}
@@ -203,19 +230,41 @@ const ProjectPage = () => {
             </GridItem>
           </Grid>
 
-          <Grid templateColumns="repeat(3, 1fr)" gap="6">
-            <GridItem display={"flex"} alignItems={"center"}>
-              <Heading>Owlers Votes</Heading>
-            </GridItem>
-            <GridItem display={"flex"} alignItems={"center"}>
+          { isSmallDevice() && <Flex>
+            {isLoadingProject ? (
+                <SkeletonText noOfLines={3} />
+              ) : (
+                <Text>{project?.description}</Text>
+              )}
+          </Flex>}
+
+            { isSmallDevice() &&<Flex>
+                <Heading as="h1" fontWeight="normal" className={styles.title}>Owlers Votes</Heading>
+            </Flex>}
+
+             {isSmallDevice() &&<GridItem display={"flex"} alignItems={"center"}>
               <OwlStats
                 legits={project?.decisionsStats.legit || 0}
                 scams={project?.decisionsStats.scam || 0}
                 isLoading={isLoadingProject}
               />
-            </GridItem>
+            </GridItem> }
+
+          <Grid gap="6" className={styles.decisions}>
+            { isSmallDevice() ? null : <GridItem display={"flex"} alignItems={"center"}>
+              <Heading>Owlers Votes</Heading>
+            </GridItem> }
+
+            {isSmallDevice() ? null : <GridItem display={"flex"} alignItems={"center"}>
+              <OwlStats
+                legits={project?.decisionsStats.legit || 0}
+                scams={project?.decisionsStats.scam || 0}
+                isLoading={isLoadingProject}
+              />
+            </GridItem> }
+
             <GridItem>
-              <Flex justifyContent={"flex-end"}>
+              <Flex className={styles.owlActions}>  
                 <ConnectKitButton.Custom>
                   {({ show }) => {
                     return (
@@ -239,23 +288,32 @@ const ProjectPage = () => {
         borderRadius={24}
         borderColor={"transparent"}
       >
-        <Card.Header>
+        <Card.Header marginBottom={isTokenomicsAccordionOpen ? 0 : 5}>
           <Card.Title>
-            <Flex alignItems={"center"}>
-              <Card.Title as={"h1"} fontSize={"30px"} fontWeight={"400"}>
-                Project tokenomics
-              </Card.Title>
-              <GoToLink
-                isDisabled={isLoadingProject}
-                title="View tokenomics"
+            <Flex justifyContent={"space-between"}>
+              <Flex alignItems={"center"}>
+                <Heading as="h1" fontWeight="normal" className={styles.title}>Project tokenomics</Heading>
+                {isSmallDevice() ? null : <GoToLink
+                  isDisabled={isLoadingProject}
+                  title="View tokenomics"
+                  onClick={() =>
+                    window.open((project as any).tokenDistributionLink)
+                  }
+                />}
+              </Flex>
+              <CollapseButton
                 onClick={() =>
-                  window.open((project as any).tokenDistributionLink)
+                  setIsTokenomicsAccordionOpen(!isTokenomicsAccordionOpen)
                 }
+                isOpen={isTokenomicsAccordionOpen}
               />
             </Flex>
           </Card.Title>
         </Card.Header>
-        <Card.Body gap="2">
+        <Card.Body
+          gap="1"
+          className={!isTokenomicsAccordionOpen ? styles.isClose : ""}
+        >
           <Flex flexWrap={"wrap"}>
             {isLoadingProject
               ? Array.from({ length: 5 }).map(() => (
@@ -287,16 +345,31 @@ const ProjectPage = () => {
         borderRadius={24}
         borderColor={"transparent"}
       >
-        <Card.Header>
-          <Card.Title as={"h1"} fontSize={"30px"} fontWeight={"400"}>
-            Contracts
+        <Card.Header marginBottom={isContractsAccordionOpen ? 0 : 5}>
+          <Card.Title>
+            <Flex justifyContent={"space-between"}>
+              <Heading as="h1" fontWeight="normal" className={styles.title}>Contracts</Heading>
+              <CollapseButton
+                onClick={() =>
+                  setIsContractsAccordionOpen(!isContractsAccordionOpen)
+                }
+                isOpen={isContractsAccordionOpen}
+              />
+            </Flex>
           </Card.Title>
         </Card.Header>
-        <Card.Body gap="2">
+        <Card.Body
+          gap="2"
+          className={!isContractsAccordionOpen ? styles.isClose : ""}
+        >
           <Flex>
             {project && project.contracts
               ? project.contracts.map((contract: any) => (
-                  <ProjectContract network={contract.name} link={contract.link} isLoading={isLoadingProject} />
+                  <ProjectContract
+                    network={contract.name}
+                    link={contract.link}
+                    isLoading={isLoadingProject}
+                  />
                 ))
               : ""}
           </Flex>
@@ -310,14 +383,25 @@ const ProjectPage = () => {
         borderRadius={24}
         borderColor={"transparent"}
       >
-        <Card.Header>
-          <Card.Title as={"h1"} fontSize={"30px"} fontWeight={"400"}>
-            Roadmap
+        <Card.Header marginBottom={isRoadmapAccordionOpen ? 0 : 5}>
+          <Card.Title>
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
+              <Heading as="h1" fontWeight="normal" className={styles.title}>Roadmap</Heading>
+              <CollapseButton
+                onClick={() =>
+                  setIsRoadmapAccordionOpen(!isRoadmapAccordionOpen)
+                }
+                isOpen={isRoadmapAccordionOpen}
+              />
+            </Flex>
           </Card.Title>
         </Card.Header>
-        <Card.Body gap="2">
+        <Card.Body gap="2" className={!isRoadmapAccordionOpen ? styles.isClose : ""}>
           {project?.roadMap && project?.roadMap.length > 0 ? (
-            <ProjectRoadmap roadMap={project.roadMap} isLoading={isLoadingProject} />
+            <ProjectRoadmap
+              roadMap={project.roadMap}
+              isLoading={isLoadingProject}
+            />
           ) : (
             <Empty message="No project roadMap!" />
           )}
@@ -338,8 +422,6 @@ const ProjectPage = () => {
       />
       <Toaster />
     </>
-  ) : (
-    "loading..."
   );
 };
 

@@ -1,25 +1,26 @@
 import { useAccount, useBalance, useDisconnect } from "wagmi";
 import { Card, Heading, Badge, Flex, Link, Text } from "@chakra-ui/react";
-import { Button } from "../../../components/ui/button";
-import { StatRoot, StatLabel, StatValueText,  } from "../../../components/ui/stat";
-import { useLazyGetDecisionsQuery } from "../../services/decisions";
+import { Button } from "../../../../components/ui/button";
+import { StatRoot, StatLabel, StatValueText,  } from "../../../../components/ui/stat";
+import { useLazyGetDecisionsQuery } from "../../../services/decisions";
 import { useEffect, useState } from "react";
-import ProjectList from "../../components/project-list";
-import OwlStats from "../../components/owl-stats";
-import BNBCoinLogo from "../../../assets/bnb-coin-logo.svg";
-import ETHChainIcon from "../../../assets/ETHChainIcon.svg";
-import Owlet from "../../../assets/owlet.svg";
-import { disconnect as disconnectWallet } from "../../store/slices/wallet";
-import { getNetwork } from "../../store/selectors/wallet";
+import ProjectList from "../../../components/project-list";
+import OwlStats from "../../../components/owl-stats";
+import BNBCoinLogo from "../../../../assets/bnb-coin-logo.svg";
+import ETHChainIcon from "../../../../assets/ETHChainIcon.svg";
+import Owlet from "../../../../assets/owlet.svg";
+import { disconnect as disconnectWallet } from "../../../store/slices/wallet";
+import { getNetwork } from "../../../store/selectors/wallet";
 import { useDispatch, useSelector } from "react-redux";
-import NetworksSelector from "./networks-selectors";
-import { getMyAllocations } from "../../services/preslae-contract";
+import NetworksSelector from "../networks-selectors";
+import { getMyAllocations } from "../../../services/preslae-contract";
 import { useNavigate } from "react-router-dom";
-import { UserTokenAllocation } from "../../types";
+import { UserTokenAllocation } from "../../../types";
 import { RiArrowRightLine } from "react-icons/ri";
-import { formatPrices } from "../../utilities/wallet";
-import UserProfileAvatar from "../../components/user-profile-avatar/UserProfileAvatar";
-import { InfoTip } from "../../../components/ui/toggle-tip";
+import { formatPrices } from "../../../utilities/wallet";
+import UserProfileAvatar from "../../../components/user-profile-avatar/UserProfileAvatar";
+import { InfoTip } from "../../../../components/ui/toggle-tip";
+import styles from "./my-settings.module.scss";
 
 
 const MySettings = () => {
@@ -95,9 +96,9 @@ const MySettings = () => {
             <Card.Root borderRadius={24} display={"flex"} justifyContent={"center"} marginBottom={5}>
                 <Card.Header>
                     <Flex justifyContent={"space-between"}>
-                        <Heading>My Account</Heading>
+                        <Heading as="h1" fontWeight="normal" className={styles.title}>My Wallet</Heading>
                         <div>
-                        <Button onClick={handleDisconnectClicked} borderColor="danger3" color="danger3" variant={"outline"}>Disconnect Wallet</Button>
+                        <Button onClick={handleDisconnectClicked} borderColor="danger3" color="danger3" variant={"outline"}>Disconnect</Button>
                         </div>
                     </Flex>
                 </Card.Header>
@@ -124,9 +125,8 @@ const MySettings = () => {
                     </Flex>
 
                     <Flex justifyContent={"flex-start"} width="full" flexDirection={"column"}>
-                        <Heading margin={"10px 0"}>
-                            My Wallet
-                        </Heading>
+                        {/* <Heading >My Wallet</Heading> */}
+                        {/* as="h1" fontWeight="normal" className={styles.title} */}
                         <div>
                             {/* this should be displayed in case of the presale is end */}
                             {/* <StatRoot borderWidth="1px" p="4" borderRadius={8} display={"inline-block"}>
@@ -177,7 +177,7 @@ const MySettings = () => {
 
             <Card.Root borderRadius={24} display={"flex"} justifyContent={"center"}>
                 <Card.Header>
-                    <Heading>My Owls</Heading>
+                    <Heading as="h1" fontWeight="normal" className={styles.title}>My Owls</Heading>
                 </Card.Header>
                 <Card.Body>
 

@@ -174,7 +174,6 @@ const ProjectsFilter: FC<Props> = ({ onStatusChange }) => {
       setIsOpen(true);
       const result = await trigger(val);
       if (result.isSuccess) {
-        console.log("==== result", result.data.data);
         setSearchResultItems(result.data.data);
       }
     }
@@ -197,7 +196,7 @@ const ProjectsFilter: FC<Props> = ({ onStatusChange }) => {
               items={searchResultItems}
             >
               <InputGroup
-                width={400}
+                width={"100%"}
                 startElement={<LuSearch />}
                 endElement={<Kbd>⌘K</Kbd>}
               >
@@ -212,9 +211,10 @@ const ProjectsFilter: FC<Props> = ({ onStatusChange }) => {
             <Select.Root
               collection={projectsStatus}
               size="sm"
-              width={150}
+              width={100}
               defaultValue={["all"]}
               rounded={"xl"}
+              marginLeft={"10px"}
               onValueChange={handleProjectStatusChanged}
             >
               <Select.HiddenSelect />

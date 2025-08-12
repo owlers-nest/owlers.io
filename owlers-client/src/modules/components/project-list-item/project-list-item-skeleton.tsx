@@ -1,5 +1,5 @@
 import { Table, Flex, Box, Heading, Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
-import OwlBadge from "../owl-badge";
+import OwlBadge from "../owl-badge/owl-badge";
 import { FC } from "react";
 
 

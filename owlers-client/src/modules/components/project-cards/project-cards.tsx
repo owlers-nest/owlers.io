@@ -1,7 +1,8 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import ProjectCard from "./project-card/project-card";
-import { Project } from "../types";
-import ProjectCardSkeleton from "./project-card/project-card-skeleton";
+import ProjectCard from "../project-card/project-card";
+import { Project } from "../../types";
+import ProjectCardSkeleton from "../project-card/project-card-skeleton";
+import styles from "./project-cars.module.scss";
 
 interface Props {
   projects: Project[];
@@ -10,7 +11,7 @@ interface Props {
 
 const ProjectCards = ({ projects, isLoading }: Props) => {
   return (
-    <Grid templateColumns="repeat(3, auto)" gap="2">
+    <Grid className={styles.projectsContainer}>
       {isLoading
         ? Array.from({ length: 6 }).map(() => <ProjectCardSkeleton />)
         : projects.map((project) => (

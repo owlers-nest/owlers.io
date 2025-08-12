@@ -1,0 +1,37 @@
+.owlVotes {
+    margin-top: 15px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.owlContent {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+@media screen and (min-width: 1024px) {
+  .owlVotes {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  .owlContent {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: normal;
+}
+}

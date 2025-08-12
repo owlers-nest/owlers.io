@@ -1,0 +1,11 @@
+.recentProjectsTitle {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+/* large laptops and bigger screens **/
+@media screen and (min-width: 1024px) {
+    .recentProjectsTitle {
+        font-size: 32px;
+    }
+}

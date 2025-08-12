@@ -4,6 +4,7 @@ import walletReducer from  "./slices/wallet";
 import { projectsApi } from "../services/projects";
 import { decisionsApi } from "../services/decisions";
 import { setupListeners } from '@reduxjs/toolkit/query';
+import uiReducer from "./slices/ui";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         [decisionsApi.reducerPath]: decisionsApi.reducer,
         projects: projectsReducer,
         wallet: walletReducer,
+        ui: uiReducer,
     },
 
     middleware: (getDefaultMiddleware) =>

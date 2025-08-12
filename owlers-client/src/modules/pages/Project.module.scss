@@ -1,0 +1,64 @@
+.isOpen {
+  display: flex;
+  opacity: 1;
+  transition: opacity 0.5s, display 0.5s;
+  transition-behavior: allow-discrete;
+}
+
+@starting-style {
+  .isOpen {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.isClose {
+  display: none;
+  opacity: 0;
+}
+
+
+.title {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.viewAllButton {
+    font-size: 10px;
+    margin: 0;
+}
+
+/* large laptops and bigger screens **/
+@media screen and (min-width: 1024px) {
+    .title {
+        font-size: 32px;
+    }
+}
+
+.mainContent {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.decisions {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.owlActions {
+  flex-direction: row;;
+}
+
+@media screen and (min-width: 1024px) {
+  .mainContent {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .decisions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .owlActions {
+  justify-content: flex-end;
+   align-items: flex-end;
+}
+}

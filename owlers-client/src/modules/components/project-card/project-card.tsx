@@ -2,7 +2,8 @@ import { Card, Flex, Heading } from "@chakra-ui/react";
 import { Button } from "../../../components/ui/button";
 import { Avatar } from "../../../components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import OwlBadge from "../owl-badge";
+import OwlBadge from "../owl-badge/owl-badge";
+import styles from "./project-card.module.scss";
 
 interface Props {
     name: string;
@@ -38,18 +39,19 @@ const ProjectCard = ({ name, description, image, id, legitStats }: Props) => {
                         <Avatar
                             src={image}
                             name={name}
-                            size="lg"
+                            // size="lg"
                             shape="full"
                             bg={'transparent'}
+                            className={styles.avatar}
                         />
-                        <Heading marginLeft={'5px'}  color="primary1" as={"h2"} fontWeight={"normal"}>
+                        <Heading marginLeft={'5px'} color="primary1" as={"h2"} fontWeight={"normal"} className={styles.projectName}>
                             {name}
                         </Heading>
                          
                     </Flex>
                     {renderOwlBadge()}
                 </Flex>
-                <Card.Description marginTop={5} color={"primary2"} textWrap={'none'} overflow={'hidden'}>
+                <Card.Description marginTop={5} color={"primary2"} textWrap={'none'} overflow={'hidden'} className={styles.description}>
                     {description}
                 </Card.Description>
             </Card.Body>

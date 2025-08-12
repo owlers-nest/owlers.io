@@ -1,4 +1,6 @@
 import Slider from "react-slick";
+import { useSelector } from "react-redux";
+import { getIsMediumTableAndSmallLaptop, getIsSmallMobile, getIsTabletAndLargeMobile } from "../../store/selectors/ui";
 import NextArrow from "./next-arrow";
 import PrevArrow from "./prev-arrow";
 
@@ -20,6 +22,18 @@ const settings = {
   
 
 const SliderComponent = ({ children }: Props) => {
+    const isSmallMobile = useSelector(getIsSmallMobile);
+    const isTabletAndLargeMobile = useSelector(getIsTabletAndLargeMobile);
+    const isMediumTableAndSmallLaptop = useSelector(getIsMediumTableAndSmallLaptop);
+    const getSlideToShow = () => {
+        if (isSmallMobile || isTabletAndLargeMobile) {
+            return 1;
+        } else if (isMediumTableAndSmallLaptop) {
+            return 2;
+        }
+        return 4;
+    }
+    settings.slidesToShow = getSlideToShow();
     return(
         <Slider {...settings}>
             { children }

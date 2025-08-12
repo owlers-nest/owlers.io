@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProjectsQuery } from "../services/projects";
 import { Button } from "../../components/ui/button";
-import ProjectCards from "../components/project-cards";
+import ProjectCards from "../components/project-cards/project-cards";
 import ProjectList from "../components/project-list";
 import { getProjects } from "../store/selectors/projects";
 import { insertProjects, updateProjectsStatus } from "../store/slices/projects";

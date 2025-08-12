@@ -1,25 +1,31 @@
 import { Box, Flex, Float } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Home from "../../assets/dark-home.svg";
-import LightHome from "../../assets/light-home.svg";
-import Projects from "../../assets/stacks.svg";
-import LightProjects from "../../assets/light-stacks.svg";
-import Owlet from "../../assets/owlet.svg";
-import Owlers from "../../assets/owlers.svg";
-import Settings from "../../assets/settings.svg";
-import Soon from "../../assets/search_activity.svg";
-import EthChainIcon from "../../assets/ETHChainIcon.svg";
-import BNBChainIcon from "../../assets/bnb-chain-logo.svg";
-import { getNetwork } from "../store/selectors/wallet";
+import Home from "../../../assets/dark-home.svg";
+import LightHome from "../../../assets/light-home.svg";
+import Projects from "../../../assets/stacks.svg";
+import LightProjects from "../../../assets/light-stacks.svg";
+import Owlet from "../../../assets/owlet.svg";
+import Owlers from "../../../assets/owlers.svg";
+import Settings from "../../../assets/settings.svg";
+import Soon from "../../../assets/search_activity.svg";
+import EthChainIcon from "../../../assets/ETHChainIcon.svg";
+import BNBChainIcon from "../../../assets/bnb-chain-logo.svg";
+import { getNetwork } from "../../store/selectors/wallet";
 import { useSelector } from "react-redux";
 import { useAccount } from "wagmi";
+import styles from "./side-nav.module.scss";
+import { getIsSmallMobile, getIsTabletAndLargeMobile } from '../../store/selectors/ui';
 
 const SideNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const network = useSelector(getNetwork);
+  const isSmallMobile = useSelector(getIsSmallMobile);
+  const isTabletAndLargeMobile = useSelector(getIsTabletAndLargeMobile);
+
   const { isConnected } = useAccount();
+
 
   const isActive = (link: string, target = "home") => {
     console.log("link", link);
@@ -33,21 +39,13 @@ const SideNav = () => {
     <Flex
       zIndex={1}
       position="fixed"
-      top="0"
-      left="0"
-      justifyContent={"space-between"}
-      style={{
-        padding: "20px 10px",
-        width: "100px",
-        height: "100vh",
-        backgroundColor: "#fff",
-      }}
-      direction={"column"}
       align={"center"}
-      justify={"center"}
+      className={isTabletAndLargeMobile || isSmallMobile ? styles.tab :styles.sideNav}
     >
-      <img src={Owlers} alt="owlers logo" />
-      <Flex flexDirection={"column"} alignItems={"center"}>
+      <img src={Owlers} alt="owlers logo" className={styles.logo} />
+
+
+      <Flex flexDirection={"column"} alignItems={"center"} className={isTabletAndLargeMobile || isSmallMobile ? styles.tabMenu : ''}>
         <Box
           as="button"
           style={{ textDecoration: "none" }}
@@ -61,6 +59,7 @@ const SideNav = () => {
             role="group"
             cursor="pointer"
           >
+            {/* className={styles.tabMenu} */}
             <Flex flexDirection={"column"} alignItems={"center"} width={"100%"}>
               {isActive("/", "home") ? (
                 <img width="30" height="30" src={Home} alt="" />
@@ -148,6 +147,7 @@ const SideNav = () => {
         _focus={{ boxShadow: "none" }}
         onClick={() => navigate("/my-settings")}
         position={"relative"}
+        className={styles.settings}
       >
         {isConnected ? (
           <Float placement={"top-end"}>

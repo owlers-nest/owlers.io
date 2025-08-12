@@ -57,7 +57,6 @@ const WHAT_IS_OWLERS_BUTTONS = [
     // ]
 ]
 
-
 const OWLET_TOKEN_BUTTONS = [
     [
         {
@@ -70,7 +69,6 @@ const OWLET_TOKEN_BUTTONS = [
         },
     ]
 ]
-
 
 const OWLERS_PRIVACY_AND_POLICY_BUTTONS_TEXT = {
     SHOW_OWLERS_PRIVACY_AND_POLICY_INTRO: "SHOW_OWLERS_PRIVACY_AND_POLICY_INTRO",

@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 
 import NotConnected from "../components/not-connected";
-import MySettings from "../components/my-settings";
+import MySettings from "../components/my-settings/my-settings";
 
 const SettingsPage = () => {
     const { isConnected } = useAccount();

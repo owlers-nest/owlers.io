@@ -798,3 +798,11 @@ export const PRESALE_ABI = [
     "type": "function"
   }
 ];
+
+export const SCREEN_SIZE = {
+  SMALL_MOBILE: [576, 600],
+  TABLET_AND_LARGE_MOBILE: [601, 768],
+  MEDIUM_TABLE_AND_SMALL_LAPTOP: [769, 1024],
+  LARGE_LAPTOPS_AND_DESKTOPS: [1025, 1200],
+  EXTRA_LARGE: [1201, 1400],
+}

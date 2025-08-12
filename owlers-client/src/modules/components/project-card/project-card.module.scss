@@ -1,0 +1,35 @@
+// .description {
+//     // display: none;
+//      white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+// }
+
+// @media screen and (min-width: 1024px) {
+//     .description {
+//         // display: table-cell;
+//         white-space: pre-wrap;
+//          overflow: hidden;
+//         text-overflow: ellipsis;
+//     }
+// }
+
+.avatar {
+    width: 30px;
+    height: 30px;
+}
+
+.projectName {
+    font-size: 18px;
+}
+
+@media  screen and (min-width: 1024px) {
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .projectName {
+        font-size: 20px;
+    }
+}

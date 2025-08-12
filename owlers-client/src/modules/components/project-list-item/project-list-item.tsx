@@ -1,9 +1,9 @@
 import { Table, Flex, Box, Heading } from "@chakra-ui/react";
 import { Avatar } from "../../../components/ui/avatar";
 import { Button } from "../../../components/ui/button";
-import OwlBadge from "../owl-badge";
+import OwlBadge from "../owl-badge/owl-badge";
 import { useNavigate } from "react-router-dom";
-
+import styles from "./project-list-item.module.scss";
 
 export interface Props {
     name: string;
@@ -40,15 +40,13 @@ const ProjectListItem = ({ id, name, description, image, legitStats, isLastEleme
                             <Avatar
                                 src={image}
                                 name={name}
-                                size="lg"
                                 shape="full"
                                 bg={'transparent'}
-                                width={50}
-                                height={50}
+                                className={styles.avatar}
                             />
                         </Box>
                         <Flex flexDirection={"column"}>
-                            <Heading color="primary1" as={"h2"} fontWeight={"normal"}>
+                            <Heading color="primary1" as={"h2"} fontWeight={"normal"} className={styles.projectName}>
                                 {name}
                             </Heading>
                             {renderOwlBadge()}
@@ -56,11 +54,11 @@ const ProjectListItem = ({ id, name, description, image, legitStats, isLastEleme
                     </Flex>
                 </Flex>
             </Table.Cell>
-            <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} maxW="350px" color="primary2">
+            <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} maxW="350px" color="primary2" className={styles.description}>
                 {description}
             </Table.Cell>
             <Table.Cell borderBottom={isLastElement ? "none": "1px solid grey.light"} textAlign="end">
-                <Button size={"lg"} variant="outline" onClick={() => navigate(`/projects/${id}`)} borderRadius={"8px"} color="primary1" borderColor={"primary1"}>View Project</Button>
+                <Button className={styles.viewProjectButton} size={"lg"} variant="outline" onClick={() => navigate(`/projects/${id}`)} borderRadius={"8px"} color="primary1" borderColor={"primary1"}>View Project</Button>
             </Table.Cell>
         </Table.Row>
     )
